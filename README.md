@@ -41,6 +41,8 @@ This is where you can find all the parts of the code that I deemed to be somethi
 - Requires a MotorPID to already be created.
 
 ### General Robot Adjustments
+
+#### Setting Drivetrain Motor Inversion
 - `frontLeftMotor.setInverted(true);`
 - `frontRightMotor.setInverted(true);`
 - `rearLeftMotor.setInverted(true);`
