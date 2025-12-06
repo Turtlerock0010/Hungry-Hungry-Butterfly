@@ -90,7 +90,7 @@ NoU_Motor rearLeftMotor(8);
 NoU_Motor rearRightMotor(5);
 
 // Motor Functions Init
-NoU_Motor intakeMotor(3);
+NoU_Motor intakeMotor(2);
 NoU_Motor elevatorMotor(6);
 NoU_Servo pivotingServo(1);
 NoU_Servo intakeServo(2);
@@ -101,8 +101,11 @@ NoU_Drivetrain drivetrain(&frontLeftMotor, &frontRightMotor, &rearLeftMotor, &re
 // PID Init
 MotorPID elevatorMotorPID(elevatorMotor);
 
-float measured_angle = 31.416;
+float measured_angle = 27.451;
 float angular_scale = (5.0*2.0*PI) / measured_angle;
+
+bool intakeServoButton = true;
+bool intakeServoState = true;
 
 void setup() {
   PestoLink.begin("ADD V");
@@ -110,6 +113,9 @@ void setup() {
 
   NoU3.begin();
   NoU3.calibrateIMUs(); // this takes exactly one second. Do not move the robot during calibration.
+
+  // Allows for immediate robot movement from small movements
+  drivetrain.setMinimumOutput(0.1);
 
   // Encoder Startup
   elevatorMotor.beginEncoder();
@@ -145,18 +151,18 @@ void loop() {
 
     // Raise Elevator 
     if (PestoLink.buttonHeld(4) || PestoLink.keyHeld(Key::E)) {
-      elevatorMotorPID.setAngle(-4000);
+      elevatorMotorPID.setAngle(-6500);
       // The range is from 0 to -4000 with the current elevator,
       // But if the elevator is fixed it can possibly go up to -6000
     } else if (PestoLink.buttonHeld(5) || PestoLink.keyHeld(Key::Q)) {
       elevatorMotorPID.setAngle(0);
     }
 
-    //Intake Servo
-    if (PestoLink.buttonHeld(12) || PestoLink.buttonHeld(13) || PestoLink.keyHeld(Key::R) || PestoLink.keyHeld(Key::F)) {
-      if (PestoLink.buttonHeld(12) || PestoLink.keyHeld(Key::R)) { // Ts so arbitrary 😭
+    // Intake Motor
+    if (PestoLink.buttonHeld(6) || PestoLink.buttonHeld(7) || PestoLink.keyHeld(Key::R) || PestoLink.keyHeld(Key::F)) {
+      if (PestoLink.buttonHeld(7) || PestoLink.keyHeld(Key::R)) { // Ts so arbitrary 😭
         intakeMotor.setInverted(false);
-      } else if (PestoLink.buttonHeld(13) || PestoLink.keyHeld(Key::F)) {
+      } else if (PestoLink.buttonHeld(6) || PestoLink.keyHeld(Key::F)) {
         intakeMotor.setInverted(true);
       }
       intakeMotor.set(1);
@@ -164,18 +170,53 @@ void loop() {
       intakeMotor.set(0);
     }
 
-    // Adjust Height
-    if (PestoLink.buttonHeld(1) || PestoLink.keyHeld(Key::C)) {
-      pivotingServo.write(0);
+    // Intake Servo Toggle Switch
+    if (PestoLink.buttonHeld(0) || PestoLink.keyHeld(Key::V)) {
+      if (intakeServoButton == true) {
+        intakeServoButton = false;
+        if (intakeServoState) {
+          intakeServo.write(100);
+          intakeServoState = false;
+        } else {
+          intakeServo.write(180);
+          intakeServoState = true;
+        }
+      }
     } else {
-      pivotingServo.write(135); // Set it back to 135
+      intakeServoButton = true;
     }
 
-    // Adjusts Intake Arm Angle (Possibly might be removed)
-    if (PestoLink.buttonHeld(0) || PestoLink.keyHeld(Key::V)) {
-      intakeServo.write(100);
-    } else {
+    // Level Heights State Machine
+    if (PestoLink.buttonHeld(3) || PestoLink.keyHeld(Key::1)) {
+      // Stow
+      pivotingServo.write(30);
+      elevatorMotorPID.setAngle(0);
       intakeServo.write(180);
+      intakeServoState = true;
+
+    } else if (PestoLink.buttonHeld(13) || PestoLink.keyHeld(Key::2)) { // Ground
+      pivotingServo.write(120);
+      elevatorMotorPID.setAngle(0);
+      intakeServo.write(180);
+      intakeServoState = true;
+
+    } else if (PestoLink.buttonHeld(14) || PestoLink.keyHeld(Key::3)) { // L1 & L2
+      pivotingServo.write(0);
+      elevatorMotorPID.setAngle(0);
+      intakeServo.write(180);
+      intakeServoState = true;
+      
+    } else if (PestoLink.buttonHeld(15) || PestoLink.keyHeld(Key::4)) { // L3
+      pivotingServo.write(0);
+      elevatorMotorPID.setAngle(-3250);
+      intakeServo.write(180);
+      intakeServoState = true;
+      
+    } else if (PestoLink.buttonHeld(12) || PestoLink.keyHeld(Key::5)) { // L4
+      pivotingServo.write(0);
+      elevatorMotorPID.setAngle(-6500);
+      intakeServo.write(180);
+      intakeServoState = true;
     }
 
 
