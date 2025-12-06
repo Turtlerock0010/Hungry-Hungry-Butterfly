@@ -1,5 +1,5 @@
 /*
-Program: ADD V Code
+Program: Field Relative Holonomic Drive Code
 Creation: November 18th, 2025
 Contributors: Daniel Principe, Owen King
 Use: Field relative holonomic drive
@@ -21,7 +21,7 @@ float measured_angle = 31.416;
 float angular_scale = (5.0*2.0*PI) / measured_angle;
 
 void setup() {
-  PestoLink.begin("ADD V");
+  PestoLink.begin("Field Relative Holonomic Drive Test");
   Serial.begin(115200);
 
   NoU3.begin();
