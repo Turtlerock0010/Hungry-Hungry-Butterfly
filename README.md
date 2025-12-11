@@ -10,7 +10,8 @@ Welcome to Hungry Hungry Butterfly code respository, A repository for the progra
 This is where you can find all the parts of the code that I deemed to be something that you really want an explanation on what it exactly does in the code as some of the features. The reason why I am doing this now is because from previous MiniFRC code reading and deciphering it is really hard to actually know what does what and why it does what it needs to do. So please use this area as a reference in order to find out what in the world is going on in the code.
 
 ### Layouts
-<img width="1169" height="596" alt="Screenshot 2025-12-06 at 5 31 40 PM" src="https://github.com/user-attachments/assets/7e741722-3c72-4d57-9224-c0ec6d1bec9a" />
+<img width="1178" height="641" alt="Screenshot 2025-12-10 at 10 04 31 PM" src="https://github.com/user-attachments/assets/add18409-b176-4ccb-86ba-8d31169be035" />
+
 
 
 ### PID Controller
