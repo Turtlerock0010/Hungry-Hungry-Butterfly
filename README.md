@@ -12,6 +12,7 @@ This is where you can find all the parts of the code that I deemed to be somethi
 ### Layouts
 <img width="1178" height="641" alt="Screenshot 2025-12-10 at 10 04 31 PM" src="https://github.com/user-attachments/assets/add18409-b176-4ccb-86ba-8d31169be035" />
 
+> [Controller Layout Page](https://www.padcrafter.com/?templates=Hungry+Hungry+Butterfly+Controller+Layout&plat=1&leftTrigger=Outtake&rightTrigger=Intake&dpadUp=L4&dpadRight=L3&dpadLeft=L2%2FL1&dpadDown=Ground&yButton=Stow&aButton=Flip+End+Effector&leftStick=Strafe+Robot&rightStick=Rotate+Robot) if anyone is wondering where I got it from
 
 
 ### PID Controller
