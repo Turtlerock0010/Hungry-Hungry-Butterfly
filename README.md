@@ -1,10 +1,10 @@
-# ADD-V
+# Hungry-Hungry-Butterfly
 ![IMG_6744](https://github.com/user-attachments/assets/04fc5666-46ef-44d7-b1fa-b526459fd6ab)
 
-> ADD V, Our MiniFRC 11.5 robot!
+> Hungry Hungry Butterfly, Our MiniFRC 11.5 robot!
 
 ## About
-Welcome to ADD V code respository, A repository for the programmers of Mini FRC team [83] Pink Fluffy Unicorns. Code will be updated and changes will be documented in the [discussion page](https://github.com/Turtlerock0010/ADD-V/discussions/categories/changes) for changes. For team members accessing the code to push into the NoU3, please use `main.ino` as any code in the file should have the latest and most reliable code. A guide on the innerworkings of the code will be created below.
+Welcome to Hungry Hungry Butterfly code respository, A repository for the programmers of Mini FRC team [83] Pink Fluffy Unicorns. Code will be updated and changes will be documented in the [discussion page](https://github.com/Turtlerock0010/ADD-V/discussions/categories/changes) for changes. For team members accessing the code to push into the NoU3, please use `main.ino` as any code in the file should have the latest and most reliable code. A guide on the innerworkings of the code will be created below.
 
 ## Guide
 This is where you can find all the parts of the code that I deemed to be something that you really want an explanation on what it exactly does in the code as some of the features. The reason why I am doing this now is because from previous MiniFRC code reading and deciphering it is really hard to actually know what does what and why it does what it needs to do. So please use this area as a reference in order to find out what in the world is going on in the code.
