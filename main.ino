@@ -1,8 +1,8 @@
 /*
-Program: ADD V Code
+Program: Hungry Hungry Butterfly Code
 Creation: November 18th, 2025
 Contributors: Daniel Principe, Owen King
-Use: The code that goes into ADD V
+Use: The code that goes into Hungry Hungry Butterfly
 */
 
 #include <PestoLink-Receive.h>
@@ -108,7 +108,7 @@ bool intakeServoButton = true;
 bool intakeServoState = true;
 
 void setup() {
-  PestoLink.begin("ADD V");
+  PestoLink.begin("Hungry Hungry Butterfly");
   Serial.begin(115200);
 
   NoU3.begin();
