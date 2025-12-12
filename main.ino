@@ -209,7 +209,7 @@ void loop() {
         }
       }
     } else {
-      intakeServoButton = true;
+      percisionMoveButton = true;
     }
 
     // Level Heights State Machine
