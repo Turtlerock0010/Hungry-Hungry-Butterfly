@@ -103,9 +103,15 @@ MotorPID elevatorMotorPID(elevatorMotor);
 
 float measured_angle = 27.451;
 float angular_scale = (5.0*2.0*PI) / measured_angle;
+float movementSpeed = 1;
 
+// Intake Toggle Variables
 bool intakeServoButton = true;
 bool intakeServoState = true;
+
+// Percision Movement Toggle Variables
+bool percisionMoveButton = true;
+bool percisionMoveState = true;
 
 void setup() {
   PestoLink.begin("Hungry Hungry Butterfly");
@@ -171,12 +177,14 @@ void loop() {
     }
 
     // Intake Servo Toggle Switch
-    if (PestoLink.buttonHeld(0) || PestoLink.keyHeld(Key::V)) {
+    if (PestoLink.buttonHeld(0) || PestoLink.keyHeld(Key::T)) {
       if (intakeServoButton == true) {
         intakeServoButton = false;
+
         if (intakeServoState) {
-          intakeServo.write(100);
+          intakeServo.write(90);
           intakeServoState = false;
+
         } else {
           intakeServo.write(180);
           intakeServoState = true;
@@ -186,45 +194,69 @@ void loop() {
       intakeServoButton = true;
     }
 
+    // Percision Movement Toggle Switch
+    if (PestoLink.buttonHeld(1)) {
+      if (percisionMoveButton == true) {
+        percisionMoveButton = false;
+
+        if (percisionMoveState) {
+          movementSpeed = 0.5;
+          percisionMoveState = false;
+
+        } else {
+          movementSpeed = 1;
+          percisionMoveState = true;
+        }
+      }
+    } else {
+      intakeServoButton = true;
+    }
+
     // Level Heights State Machine
-    if (PestoLink.buttonHeld(3) || PestoLink.keyHeld(Key::1)) {
+    if (PestoLink.buttonHeld(3) || PestoLink.keyHeld(Key::Digit1)) {
       // Stow
       pivotingServo.write(30);
       elevatorMotorPID.setAngle(0);
       intakeServo.write(180);
       intakeServoState = true;
 
-    } else if (PestoLink.buttonHeld(13) || PestoLink.keyHeld(Key::2)) { // Ground
+    } else if (PestoLink.buttonHeld(13) || PestoLink.keyHeld(Key::Digit2)) { // Ground
       pivotingServo.write(120);
       elevatorMotorPID.setAngle(0);
       intakeServo.write(180);
       intakeServoState = true;
 
-    } else if (PestoLink.buttonHeld(14) || PestoLink.keyHeld(Key::3)) { // L1 & L2
+    } else if (PestoLink.buttonHeld(14) || PestoLink.keyHeld(Key::Digit3)) { // L1 & L2
       pivotingServo.write(0);
       elevatorMotorPID.setAngle(0);
       intakeServo.write(180);
       intakeServoState = true;
       
-    } else if (PestoLink.buttonHeld(15) || PestoLink.keyHeld(Key::4)) { // L3
+    } else if (PestoLink.buttonHeld(15) || PestoLink.keyHeld(Key::Digit4)) { // L3
       pivotingServo.write(0);
       elevatorMotorPID.setAngle(-3250);
       intakeServo.write(180);
       intakeServoState = true;
       
-    } else if (PestoLink.buttonHeld(12) || PestoLink.keyHeld(Key::5)) { // L4
+    } else if (PestoLink.buttonHeld(12) || PestoLink.keyHeld(Key::Digit5)) { // L4
       pivotingServo.write(0);
       elevatorMotorPID.setAngle(-6500);
       intakeServo.write(180);
       intakeServoState = true;
-    }
+
+    } else if (PestoLink.buttonHeld(2) || PestoLink.keyHeld(Key::Digit5)) { // Coral Ramp
+      pivotingServo.write(42);
+      elevatorMotorPID.setAngle(0);
+      intakeServo.write(180);
+      intakeServoState = true;
+    } 
 
 
     // --- Drivetrain Code ---
     // Sets Axes
-    float fieldPowerX = PestoLink.getAxis(0);
-    float fieldPowerY = -1 * PestoLink.getAxis(1);
-    float rotationPower = -1 * PestoLink.getAxis(2);
+    float fieldPowerX = movementSpeed * PestoLink.getAxis(0);
+    float fieldPowerY = -movementSpeed * PestoLink.getAxis(1);
+    float rotationPower = -movementSpeed * PestoLink.getAxis(2);
 
     // Get robot heading (in radians) from the gyro
     float heading = NoU3.yaw * angular_scale;
